@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Viralex | منصة الهوية الرقمية</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link href="style/css/aos.css" rel="stylesheet">
+    
+    <style>
+        :root {
+            --bg: #041624;
+            --neon-g: #89cf53;
+            --neon-c: #2ab2d1;
+            --glass: rgba(255, 255, 255, 0.03);
+            --glass-border: rgba(255, 255, 255, 0.08);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        /* تحسين سلاسة التمرير في المتصفح */
+        html { scroll-behavior: smooth; }
+
+        body { 
+            background: var(--bg); 
+            color: #fff; 
+            font-family: 'Cairo', sans-serif; 
+            overflow-x: hidden; 
+            line-height: 1.6;
+        }
+        
+        /* حركة الخلفية لتبدو حية */
+        @keyframes floatBg {
+            0% { transform: translate(-50%, -50%) scale(1); }
+            50% { transform: translate(-50%, -52%) scale(1.05); }
+            100% { transform: translate(-50%, -50%) scale(1); }
+        }
+
+        body::before {
+            content: ""; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);
+            width: 80vw; height: 80vw; background-image: url("logo1.png");
+            background-size: contain; background-repeat: no-repeat; background-position: center;
+            opacity: 0.03; z-index: -2; pointer-events: none;
+            animation: floatBg 10s ease-in-out infinite;
+        }
+
+        .bg-grid {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1;
+            background-image: linear-gradient(rgba(42, 178, 209, 0.03) 1px, transparent 1px),
+                              linear-gradient(90deg, rgba(42, 178, 209, 0.03) 1px, transparent 1px);
+            background-size: 30px 30px;
+        }
+
+        nav {
+            height: 80px; display: flex; justify-content: space-between; align-items: center;
+            padding: 0 8%; background: rgba(4, 22, 36, 0.9); backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--glass-border); position: sticky; top: 0; z-index: 2000;
+            transition: 0.3s;
+        }
+
+        .main-logo { height: 40px; width: auto; transition: 0.4s; }
+        .main-logo:hover { filter: drop-shadow(0 0 8px var(--neon-g)); }
+
+        .nav-links { display: flex; gap: 30px; list-style: none; align-items: center; }
+        .nav-links a { color: #ccc; text-decoration: none; font-size: 0.95rem; transition: 0.3s; font-weight: 600; position: relative; }
+        
+        /* خط تحت الروابط عند الحوم */
+        .nav-links a::after {
+            content: ''; position: absolute; bottom: -5px; right: 0; width: 0; height: 2px;
+            background: var(--neon-g); transition: 0.3s;
+        }
+        .nav-links a:hover::after { width: 100%; }
+        .nav-links a:hover { color: var(--neon-g); }
+
+        .menu-toggle { display: none; font-size: 1.5rem; color: #fff; cursor: pointer; z-index: 2100; }
+
+        .hero-section {
+            display: grid; grid-template-columns: 1.2fr 0.8fr; 
+            min-height: calc(100vh - 80px); padding: 60px 8%; align-items: center; gap: 40px;
+        }
+
+        .hero-content { text-align: right; }
+        .hero-content h4 { color: var(--neon-c); letter-spacing: 2px; margin-bottom: 15px; font-weight: 400; font-size: 0.9rem; }
+        .hero-content h1 { font-size: clamp(1.8rem, 5vw, 3.5rem); font-weight: 900; line-height: 1.2; margin-bottom: 25px; }
+        .hero-content h1 span { color: var(--neon-g); text-shadow: 0 0 20px rgba(137, 207, 83, 0.2); }
+        .hero-content p { color: #aaa; font-size: clamp(1rem, 2vw, 1.1rem); max-width: 600px; margin-bottom: 35px; }
+        
+        .cta-group { display: flex; gap: 15px; flex-wrap: wrap; }
+        .btn-main, .btn-secondary { 
+            padding: 14px 32px; border-radius: 12px; font-weight: 700; text-decoration: none;
+            transition: 0.4s; text-align: center; font-size: 0.95rem; display: inline-block;
+        }
+        .btn-main { background: var(--neon-g); color: var(--bg); border: none; position: relative; overflow: hidden; }
+        .btn-main:hover { transform: translateY(-5px); box-shadow: 0 10px 25px rgba(137, 207, 83, 0.4); }
+        
+        .btn-secondary { border: 1px solid var(--glass-border); color: #fff; background: var(--glass); }
+        .btn-secondary:hover { border-color: var(--neon-c); background: rgba(42, 178, 209, 0.1); transform: translateY(-5px); }
+
+        .stats-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; margin-top: 50px; }
+        .stat-card { 
+            background: var(--glass); padding: 20px; border-radius: 18px; border: 1px solid var(--glass-border); 
+            text-align: center; transition: 0.4s;
+        }
+        .stat-card:hover { background: rgba(255,255,255,0.06); border-color: var(--neon-c); transform: scale(1.05); }
+        .stat-card h5 { font-size: 1.5rem; color: var(--neon-c); margin-bottom: 5px; font-weight: 800; }
+        .stat-card p { font-size: 0.8rem; color: #777; font-weight: 600; }
+
+        .hero-visual { display: flex; justify-content: center; align-items: center; width: 100%; }
+        
+        /* حركة الصورة الرئيسية */
+        @keyframes imageFloat {
+            0%, 100% { transform: translateY(0) rotate(0); }
+            50% { transform: translateY(-15px) rotate(1deg); }
+        }
+
+        .main-logo-frame {
+            width: 100%; max-width: 400px; aspect-ratio: 1; 
+            background: var(--glass); border: 1px solid var(--glass-border);
+            border-radius: 40px; position: relative; overflow: hidden;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+            animation: imageFloat 6s ease-in-out infinite;
+        }
+        .main-logo-frame img { width: 100%; height: 100%; object-fit: cover; transition: 1.2s; }
+        .main-logo-frame:hover img { transform: scale(1.1); }
+
+        .features-grid {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px; padding: 100px 8%; background: rgba(0,0,0,0.1);
+        }
+        .feature-card {
+            background: var(--glass); padding: 35px; border-radius: 28px;
+            border: 1px solid var(--glass-border); transition: 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
+            cursor: pointer; position: relative; overflow: hidden;
+        }
+        .feature-card:hover { transform: translateY(-15px); border-color: var(--neon-g); box-shadow: 0 15px 30px rgba(0,0,0,0.2); }
+        .feature-card h3 { margin-bottom: 15px; color: var(--neon-g); transition: 0.3s; }
+        .feature-card:hover h3 { letter-spacing: 1px; }
+
+        footer {
+            padding: 40px 8%; border-top: 1px solid var(--glass-border);
+            display: flex; justify-content: space-between; align-items: center; 
+            flex-wrap: wrap; gap: 20px; color: #666; background: rgba(4, 22, 36, 0.5);
+        }
+        .sochial-icon {
+            width: 38px; height: 38px; background-color: var(--neon-g); color: #041624;
+            border-radius: 50%; display: inline-flex; align-items: center;
+            justify-content: center; font-size: 18px; transition: 0.4s;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3); text-decoration: none;
+        }
+        .sochial-icon:hover { transform: rotate(360deg) scale(1.2); background-color: #fff; color: var(--neon-g); }
+
+        /* Responsive Queries */
+        @media (max-width: 992px) {
+            .hero-section { grid-template-columns: 1fr; text-align: center; padding-top: 40px; }
+            .hero-content { display: flex; flex-direction: column; align-items: center; }
+            .cta-group { justify-content: center; }
+        }
+
+        @media (max-width: 768px) {
+            .menu-toggle { display: block; }
+            .nav-links { 
+                position: fixed; top: 0; left: -100%; width: 85%; height: 100vh;
+                flex-direction: column; background: rgba(4, 22, 36, 0.98); 
+                backdrop-filter: blur(20px); padding: 100px 40px; transition: 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55); 
+            }
+            .nav-links.active { left: 0; }
+            .stats-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="bg-grid"></div>
+
+    <nav>
+        <a href="index.html">
+            <img src="logo-head1.png" alt="Viralex Logo" class="main-logo">
+        </a>
+        <div class="menu-toggle" id="mobile-menu">
+            <i class="fas fa-bars"></i>
+        </div>
+        <ul class="nav-links" id="nav-list">
+            <li><a href="identity.html">الاستراتيجية</a></li>
+            <li><a href="stationery.html">معرض اعمالنا</a></li>
+            <li><a href="aboutus.html">من نحن</a></li>
+            <li><a href="contact.html" class="btn-main" style="padding: 10px 25px; color:#041624">تواصل معنا</a></li>
+        </ul>
+    </nav>
+
+    <section class="hero-section">
+        <div class="hero-content" data-aos="fade-left" data-aos-duration="1000">
+            <h4>VIRALEX BRANDING SYSTEM</h4>
+            <h1>نحول العلامات إلى <span data-aos="zoom-in" data-aos-delay="500">طاقة</span> عابرة للحدود</h1>
+            <p>نحن لا نصمم شعارات فقط، بل نبني أنظمة بصرية ذكية تعتمد على علم النفس الرقمي لضمان انتشار علامتك التجارية.</p>
+            
+            <div class="cta-group">
+                <a href="philosophy.html" class="btn-main">من نحن</a>
+                <a href="stationery.html" class="btn-secondary">معرض الأعمال</a>
+            </div>
+
+            <div class="stats-grid">
+                <div class="stat-card" data-aos="fade-up" data-aos-delay="200"><h5>+500</h5><p>مشروع ناجح</p></div>
+                <div class="stat-card" data-aos="fade-up" data-aos-delay="400"><h5>99%</h5><p>دقة الاستهداف</p></div>
+                <div class="stat-card" data-aos="fade-up" data-aos-delay="600"><h5>24/7</h5><p>دعم تقني</p></div>
+            </div>
+        </div>
+
+        <div class="hero-visual" data-aos="fade-right" data-aos-duration="1200">
+            <div class="main-logo-frame">
+                <img src="home.jpg" alt="Viralex Home Image">
+            </div>
+        </div>
+    </section>
+
+    <section class="features-grid">
+        <div class="feature-card" onclick="location.href='identity.html'" data-aos="zoom-in-up">
+            <h3>الاستراتيجة</h3>
+            <p>بناء القواعد الأساسية لبروز علامتك التجارية في السوق المزدحم بأسلوب علمي مدروس.</p>
+            <span style="color:var(--neon-c); font-weight:bold;">إقرأ المزيد ←</span>
+        </div>
+
+        <div class="feature-card" onclick="location.href='philosophy.html'" data-aos="zoom-in-up" data-aos-delay="200">
+            <h3>من نحن</h3>
+            <p>نحن لسنا مجرد وكالة تسويق اعتيادية، بل نحن مختبر للنمو الرقمي   تأسست Viralex برؤية تهدف إلى كسر القواعد التقليدية للتواصل البصري، متبنين مفهوم "الانتشار الفيروسي" كمنهجية عمل وليست مجرد صدفة</p>
+            <span style="color:var(--neon-c); font-weight:bold;">إقرأ المزيد ←</span>
+        </div>
+
+        <div class="feature-card" onclick="location.href='stationery.html'" data-aos="zoom-in-up" data-aos-delay="400">
+            <h3>معرض اعمالنا</h3>
+            <p>تطبيق هويتك على المطبوعات والوسائط الرقمية لضمان تجربة مستخدم موحدة ومبهرة.</p>
+            <span style="color:var(--neon-c); font-weight:bold;">إقرأ المزيد ←</span>
+        </div>
+    </section>
+
+    <footer>
+        <p>© 2025 Viralex Agency. جميع الحقوق محفوظة.</p>
+        <div class="footer-social">
+            <a href="https://www.instagram.com/ahmed.ismael.589100?igsh=MWV6ZTY0YzZjeGMxcQ==" class="sochial-icon"><i class="fa-brands fa-instagram"></i></a>
+            <a href="https://www.facebook.com/share/16t6MD2Z7S/" class="sochial-icon"><i class="fa-brands fa-facebook-f"></i></a>
+            <a href="https://chat.whatsapp.com/JOGnQU8Lps488XsIJP4BeU" class="sochial-icon"><i class="fa-brands fa-whatsapp"></i></a>
+            <a href="https://t.me/Viralex77" class="sochial-icon"><i class="fa-brands fa-telegram"></i></a>
+            <a href="mailto:awdh6137@gmail.com?subject=Contact from Website&body=مرحبا، أود التواصل معك" class="sochial-icon"><i class="fa-solid fa-envelope"></i></a>
+            <a href="https://www.google.com/maps?q=14.296111,44.373333" target="_blank" class="sochial-icon"><i class="fa-solid fa-location-dot"></i></a>
+            
+        </div>
+    </footer>
+
+    <script src="style/js/aos.js"></script>
+    <script>
+        // تفعيل مكتبة AOS
+        AOS.init({
+            duration: 800,
+            once: true, // الأنيميشن يحدث مرة واحدة فقط عند التمرير لسهولة القراءة
+            easing: 'ease-out-quad'
+        });
+
+        const menuToggle = document.getElementById('mobile-menu');
+        const navList = document.getElementById('nav-list');
+        const icon = menuToggle.querySelector('i');
+
+        menuToggle.addEventListener('click', () => {
+            navList.classList.toggle('active');
+            icon.classList.toggle('fa-bars');
+            icon.classList.toggle('fa-times');
+        });
+
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', () => {
+                navList.classList.remove('active');
+                icon.classList.add('fa-bars');
+                icon.classList.remove('fa-times');
+            });
+        });
+    </script>
+
+</body>
+</html>
